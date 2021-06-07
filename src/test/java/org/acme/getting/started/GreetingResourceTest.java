@@ -29,4 +29,13 @@ public class GreetingResourceTest {
                 .statusCode(200)
                 .body(is("hello " + uuid + " you quarkus"));
     }
+
+    @Test
+    void testReturnsJson() {
+        given()
+        .when().get("/hello/json")
+        .then()
+        .statusCode(200)
+        .body(is("{\"blah\":\"value\"}"));
+    }
 }
