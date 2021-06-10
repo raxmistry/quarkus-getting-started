@@ -2,11 +2,11 @@ package org.acme.getting.started;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public class InMemoryItemsRepository implements ItemsRepository {
-
-    //TODO: This is a bad collection to use
+    
     Map<UUID, TodoItem> items;
 
     public InMemoryItemsRepository() {
@@ -32,6 +32,7 @@ public class InMemoryItemsRepository implements ItemsRepository {
 
     @Override
     public TodoItem deleteItem(UUID itemId) {
-        return items.remove(itemId);
+        Optional<TodoItem> removed = Optional.ofNullable(items.remove(itemId));
+        return removed.orElseThrow(() -> new ItemNotFoundException());
     }
 }
