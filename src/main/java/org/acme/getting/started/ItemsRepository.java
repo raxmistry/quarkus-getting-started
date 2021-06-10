@@ -1,11 +1,13 @@
 package org.acme.getting.started;
 
+import java.util.UUID;
+
 public interface ItemsRepository {
-    Integer add(TodoItem item);
+    UUID add(TodoItem item);
 
-    TodoItem getItemById(Integer itemId);
+    TodoItem getItemById(UUID itemId);
 
-    void update(Integer itemId, String newDescription);
+    void update(UUID itemId, String newDescription);
 
-    boolean deleteItem(Integer itemId);
+    TodoItem deleteItem(UUID itemId);
 }

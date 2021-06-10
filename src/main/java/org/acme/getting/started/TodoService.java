@@ -1,5 +1,7 @@
 package org.acme.getting.started;
 
+import java.util.UUID;
+
 public class TodoService {
 
 
@@ -9,15 +11,15 @@ public class TodoService {
         this.itemsRepository = itemsRepository;
     }
 
-    public Integer addItem(TodoItem item) {
+    public UUID addItem(TodoItem item) {
         return itemsRepository.add(item);
     }
 
-    public TodoItem getItem(Integer itemId) {
+    public TodoItem getItem(UUID itemId) {
         return itemsRepository.getItemById(itemId);
     }
 
-    public void updateItem(Integer itemId, TodoItem item) {
+    public void updateItem(UUID itemId, TodoItem item) {
         itemsRepository.update(itemId, item.getDescription());
     }
 }

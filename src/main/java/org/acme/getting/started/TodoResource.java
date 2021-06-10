@@ -3,21 +3,21 @@ package org.acme.getting.started;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import java.util.UUID;
 
 @Path("/todo")
 public class TodoResource {
 
-    TodoService todoService;
+    TodoService todoService = new TodoService(new InMemoryItemsRepository());
 
-    public TodoResource(TodoService todoService) {
-        this.todoService = todoService;
+    public TodoResource() {
     }
 
     @POST
     @Path("/item")
-    public Response addItem(TodoItem item) {
-        todoService.addItem(item);
-        return Response.ok().build();
+    public Response addItem(TodoItemDto item) {
+        UUID uuid = todoService.addItem(new TodoItem(item.description));
+        return Response.ok(uuid).build();
     }
 
 }

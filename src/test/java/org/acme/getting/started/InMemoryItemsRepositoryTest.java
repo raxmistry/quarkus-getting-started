@@ -3,6 +3,8 @@ package org.acme.getting.started;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InMemoryItemsRepositoryTest {
@@ -17,9 +19,8 @@ public class InMemoryItemsRepositoryTest {
     @Test
     void should_addItem() {
         String description = "test1";
-        Integer itemId = repository.add(new TodoItem(description));
+        UUID itemId = repository.add(new TodoItem(description));
         assertNotNull(itemId);
-        assertEquals(itemId, 0);
         TodoItem actual = repository.getItemById(itemId);
         assertEquals(actual.getDescription(), description);
     }
@@ -29,11 +30,8 @@ public class InMemoryItemsRepositoryTest {
         String description = "item1";
         String description2 = "item2";
 
-        Integer item1 = repository.add(new TodoItem(description));
-        Integer item2 = repository.add(new TodoItem(description2));
-
-        assertEquals(item1, 0);
-        assertEquals(item2, 1);
+        UUID item1 = repository.add(new TodoItem(description));
+        UUID item2 = repository.add(new TodoItem(description2));
 
         assertEquals(repository.getItemById(item1).getDescription(), description);
         assertEquals(repository.getItemById(item2).getDescription(), description2);
@@ -42,7 +40,7 @@ public class InMemoryItemsRepositoryTest {
     @Test
     void should_updateItem() {
         String description = "test1";
-        Integer itemId = repository.add(new TodoItem(description));
+        UUID itemId = repository.add(new TodoItem(description));
 
         String newDescription = "A new description";
         repository.update(itemId, newDescription);
@@ -51,11 +49,10 @@ public class InMemoryItemsRepositoryTest {
     }
 
     @Test
-    void should_delete_item(){
+    void should_delete_item() {
         String description = "test1";
-        Integer itemId = repository.add(new TodoItem(description));
-        boolean deleted = repository.deleteItem(itemId);
-        assertTrue(deleted);
-        assertThrows(ItemNotFoundException.class, () -> repository.getItemById(itemId));
+        UUID itemId = repository.add(new TodoItem(description));
+        var deletedItem = repository.deleteItem(itemId);
+        assertEquals(itemId, deletedItem.getId());
     }
 }
